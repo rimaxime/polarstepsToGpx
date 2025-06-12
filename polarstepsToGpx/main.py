@@ -52,24 +52,7 @@ def cli(input: str, output: str, data_source: str, from_date: datetime, to_date:
         if response.status_code == 200:
             data = response.json()
             log("✅  Polarsteps Trip data downloaded", color="green", bold=True)
-            log("Compute Steps Data")
-            steps_data = {}
-            localisation_data = {}
-            for step in data['steps']:
-                location = step['location']
-                step_time = step['start_time']
-                if not (from_date and step_time < from_date or to_date and step_time > to_date):
-                    step_name = step['display_name'] if include_step_data else location['locality']
-                    step_description = step['description'] if include_step_data else None
-                    steps_data[step_time] = {'lat': location['lat'], 'lon': location['lon'],
-                                             'step_name': step_name, 'step_description': step_description}
-            log("Compute Localisation Data")
-            for step in data['zelda_steps']:
-                location = step['location']
-                step_time = step['time']
-                if not (from_date and step_time < from_date or to_date and step_time > to_date):
-                    localisation_data[step_time] = {'lat': location['lat'], 'lon': location['lon']}
-
+            localisation_data, steps_data = extract_polarsteps_data(data, include_step_data, from_date, to_date)
             if data_source == "steps":
                 build_gpx(steps_data, output)
             elif data_source == "localisation":
@@ -88,7 +71,30 @@ def cli(input: str, output: str, data_source: str, from_date: datetime, to_date:
             color="red", bold=True)
 
 
+def extract_polarsteps_data(data, include_step_data, from_date, to_date):
+    """Extract polarsteps data needed for the gpx file"""
+    steps_data = {}
+    localisation_data = {}
+    log("Compute Steps Data")
+    for step in data['steps']:
+        location = step['location']
+        step_time = step['start_time']
+        if not (from_date and step_time < from_date or to_date and step_time > to_date):
+            step_name = step['display_name'] if include_step_data else location['locality']
+            step_description = step['description'] if include_step_data else None
+            steps_data[step_time] = {'lat': location['lat'], 'lon': location['lon'],
+                                     'step_name': step_name, 'step_description': step_description}
+    log("Compute Localisation Data")
+    for step in data['zelda_steps']:
+        location = step['location']
+        step_time = step['time']
+        if not (from_date and step_time < from_date or to_date and step_time > to_date):
+            localisation_data[step_time] = {'lat': location['lat'], 'lon': location['lon']}
+    return localisation_data, steps_data
+
+
 def extract_id_and_secret(url):
+    """Identify trip id and secret from polarsteps sharing trip url"""
     parsed_url = urlparse(url)
     path_parts = parsed_url.path.strip("/").split("/")
 
@@ -108,6 +114,7 @@ def extract_id_and_secret(url):
 
 
 def build_trip_url(trip_id, secret=None):
+    """Generate api trip url from trip id and secret"""
     base_url = f"https://api.polarsteps.com/trips/{trip_id}"
     if secret:
         return f"{base_url}?s={secret}"
@@ -121,6 +128,7 @@ def log(message: str, color: str = "white", bold: bool = False) -> None:
 
 
 def build_gpx(data: dict, output: str):
+    """Create gpx file from extracted polarsteps data."""
     gpx = ET.Element('gpx')
     name = ET.SubElement(gpx, 'name')
     name.text = 'Export Gpx from Polarsteps Data'
