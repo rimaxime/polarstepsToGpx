@@ -17,15 +17,14 @@ async function cli(
   if (id_value) {
     try {
       const response = await fetch(build_trip_url(id_value, secret_value), {
-        headers: { "polarsteps-api-version": "62" },
+        headers: {
+          "polarsteps-api-version": "62"  },
       });
 
       if (response.ok) {
         const data = await response.json();
-        log("✅ Polarsteps Trip data downloaded", "green", true);
-
         const { localisation_data, steps_data } = extract_polarsteps_data(
-          data,
+          JSON.parse(data.body), //temp .body because of cors.io
           include_step_data,
           from_date,
           to_date
@@ -138,7 +137,7 @@ function extract_id_and_secret(url) {
 
 function build_trip_url(trip_id, secret) {
   // Generate api trip url from trip id and secret
-  let base_url = `https://api.polarsteps.com/trips/${trip_id}`;
+  let base_url = `https://cors.io/?url=https://api.polarsteps.com/trips/${trip_id}`;
   if (secret) {
     base_url += `?s=${secret}`;
   }
