@@ -16,6 +16,7 @@ async function cli(
 
   if (id_value) {
     try {
+      log("✅ Request data from Polarsteps api", "green", true);
       const response = await fetch(build_trip_url(id_value, secret_value), {
         headers: {
           "polarsteps-api-version": "62"  },
