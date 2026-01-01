@@ -19,7 +19,8 @@ We use the API version 62, just like the polarsteps website to be able to retrie
 - Download the GPX file
 
 ## Backend 
-To avoid CORS issues, we added a small request proxy deployed in cloudfare worker. This is just a request forwarder, the source code is available in the corsProxy folder.
+To avoid CORS issues, we added a small request proxy deployed in cloudfare worker. 
+This is just a request forwarder, the source code is available in the corsProxy folder and all observability options are disabled on cloudfare worker.
 
 # Use it with python (advanced)
 
