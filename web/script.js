@@ -23,8 +23,10 @@ async function cli(
 
       if (response.ok) {
         const data = await response.json();
+        log("✅ Polarsteps Trip data downloaded", "green", true);
+
         const { localisation_data, steps_data } = extract_polarsteps_data(
-          JSON.parse(data.body), //temp .body because of cors.io
+          data,
           include_step_data,
           from_date,
           to_date
@@ -137,7 +139,8 @@ function extract_id_and_secret(url) {
 
 function build_trip_url(trip_id, secret) {
   // Generate api trip url from trip id and secret
-  let base_url = `https://cors.io/?url=https://api.polarsteps.com/trips/${trip_id}`;
+  const proxy = "https://polarstepsproxy.rimaxime.workers.dev/?target=";
+  let base_url = proxy + `https://api.polarsteps.com/trips/${trip_id}`;
   if (secret) {
     base_url += `?s=${secret}`;
   }
