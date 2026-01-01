@@ -47,3 +47,7 @@ Options:
 - Click on the sharing button
   ![sharing.png](resources/sharing.png)
 - Copy the secret link url
+
+# Authors
+- [@rimaxime](https://github.com/rimaxime)
+- [@agroqirax](https://github.com/agroqirax)
