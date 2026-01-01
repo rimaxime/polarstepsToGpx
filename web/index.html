@@ -81,22 +81,9 @@
                 </div>
               </div>
             </div>
-            <div class="alert alert-warning d-flex align-items-start gap-3 mt-2" role="alert" style="font-size: 0.875rem;">
-              <div class="fs-4">⚠️</div>
-              <div>
-                <h2 class="h6 mb-1">CORS Proxy (Cloudflare Worker)</h2>
-                <p class="mb-1">
-                  This tool uses a private <strong>Cloudflare Worker</strong> to bypass CORS restrictions and securely fetch Polarsteps data. It processes your requests directly and does not store or track your data.
-                </p>
-                <p class="mb-0">
-                  Your data remains private and is only used for generating the GPX export. The worker code source is available in this <a href="https://github.com/rimaxime/polarstepsToGpx/blob/main/corsProxy/worker.js" target="_blank" rel="noopener">repository</a>.
-                </p>
-              </div>
-            </div>
-            <hr class="my-4" />
 
             <form>
-              <div class="mb-3">
+              <div class="mb-3 mt-2">
                 <label for="input" class="form-label">
                   Polarsteps trip URL (required)
                 </label>
@@ -220,6 +207,20 @@
                 </button>
               </div>
             </form>
+
+            <div class="alert alert-warning d-flex align-items-start gap-3 mt-2" role="alert" style="font-size: 0.875rem;">
+              <div class="fs-4">⚠️</div>
+              <div>
+                <h2 class="h6 mb-1">CORS Proxy (Cloudflare Worker)</h2>
+                <p class="mb-1">
+                  This tool uses a private <strong>Cloudflare Worker</strong> to bypass CORS restrictions and securely fetch Polarsteps data. It processes your requests directly and does not store or track your data.
+                </p>
+                <p class="mb-0">
+                  Your data remains private and is only used for generating the GPX export. The worker code source is available in this <a href="https://github.com/rimaxime/polarstepsToGpx/blob/main/corsProxy/worker.js" target="_blank" rel="noopener">repository</a>.
+                </p>
+              </div>
+            </div>
+
 
             <hr class="my-4" />
 

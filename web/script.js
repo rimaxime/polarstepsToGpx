@@ -241,6 +241,7 @@ function generate() {
   const include_step_data =
     document.getElementById("include-step-data").checked;
 
+  window.scrollTo(0, document.body.scrollHeight);
   if (!input) {
     log(
       "❌ The input url is not valid. Your url must contain trip id. Eg: https://www.polarsteps.com/{accountName}/{tripId}-{trip-name}?s={Secret}",

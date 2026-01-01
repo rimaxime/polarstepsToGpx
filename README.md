@@ -18,6 +18,9 @@ We use the API version 62, just like the polarsteps website to be able to retrie
 - Enter your polarsteps sharing URL
 - Download the GPX file
 
+## Backend 
+To avoid CORS issues, we added a small request proxy deployed in cloudfare worker. This is just a request forwarder, the source code is available in the corsProxy folder.
+
 # Use it with python (advanced)
 
 - Install the requirements from the requirements.txt file (`$ pip install -r requirements.txt`)
